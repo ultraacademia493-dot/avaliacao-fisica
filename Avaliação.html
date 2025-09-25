@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 
+<!-- Adicione estas meta tags -->
+<meta name="description" content="Sistema completo de avaliação física com adipômetro">
+<meta name="author" content="Seu Nome">
+
+<!-- Prevenir caching em navegadores antigos -->
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+    
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,6 +30,17 @@
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
+
+<!-- Script de analytics opcional -->
+<script>
+    // Mensagem de carregamento
+    console.log('Sistema de Avaliação Física carregado com sucesso!');
+    
+    // Detectar se está online
+    if(!navigator.onLine) {
+        alert('Você está offline. Algumas funcionalidades podem não funcionar.');
+    }
+</script>
         
         body {
             background-color: #f5f7fa;
@@ -1058,5 +1078,6 @@
         });
     </script>
 </body>
+
 
 </html>
