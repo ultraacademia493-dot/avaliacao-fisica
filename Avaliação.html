@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avaliação Física - Adipômetro</title>
+    <style>
+         :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --success-color: #2ecc71;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            border-radius: 8px 8px 0 0;
+            margin-bottom: 20px;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        h2 {
+            font-size: 1.8rem;
+            margin: 25px 0 15px;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 8px;
+        }
+        
+        h3 {
+            font-size: 1.4rem;
+            margin: 20px 0 10px;
+            color: var(--dark-color);
+        }
+        
+        .section-title {
+            font-size: 1.6rem;
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin: 20px 0 15px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .measurement-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .measurement-item {
+            background-color: white;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .measurement-item label {
+            font-size: 0.9rem;
+        }
+        
+        .results-section {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+        }
+        
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .result-item:last-child {
+            border-bottom: none;
+        }
+        
+        .result-value {
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        button {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+            margin-right: 10px;
+        }
+        
+        button:hover {
+            background-color: #2980b9;
+        }
+        
+        .tab-container {
+            margin: 20px 0;
+        }
+        
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #f1f1f1;
+            border: 1px solid #ddd;
+            border-bottom: none;
+            border-radius: 5px 5px 0 0;
+            margin-right: 5px;
+        }
+        
+        .tab.active {
+            background-color: white;
+            border-bottom: 1px solid white;
+            margin-bottom: -1px;
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 20px;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-top: none;
+            border-radius: 0 0 5px 5px;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .anamnese-textarea {
+            width: 100%;
+            height: 200px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            resize: vertical;
+        }
+        
+        .search-section {
+            background-color: white;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        
+        .search-form {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .search-form input {
+            flex: 1;
+        }
+        
+        .evaluations-list {
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        .evaluation-item {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+        }
+        
+        .evaluation-item:hover {
+            background-color: #f9f9f9;
+        }
+        
+        .evaluation-item:last-child {
+            border-bottom: none;
+        }
+        
+        .evaluation-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+        
+        .evaluation-name {
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .evaluation-date {
+            color: #777;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .measurement-grid {
+                grid-template-columns: 1fr;
+            }
+            .tabs {
+                flex-direction: column;
+            }
+            .tab {
+                margin-right: 0;
+                margin-bottom: 5px;
+                border-radius: 5px;
+            }
+            .tab.active {
+                border-bottom: 1px solid #ddd;
+                margin-bottom: 5px;
+            }
+            .search-form {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>Avaliação Física Completa</h1>
+            <p>Sistema de avaliação com adipômetro - Método Pollock 7 dobras</p>
+        </header>
+
+        <div class="tab-container">
+            <div class="tabs">
+                <div class="tab active" data-tab="buscar">Buscar Avaliações</div>
+                <div class="tab" data-tab="dados-pessoais">Dados Pessoais</div>
+                <div class="tab" data-tab="perimetria">Perimetria</div>
+                <div class="tab" data-tab="antropometria">Antropometria</div>
+                <div class="tab" data-tab="anamnese">Anamnese</div>
+                <div class="tab" data-tab="resultados">Resultados</div>
+            </div>
+
+            <!-- Buscar Avaliações -->
+            <div class="tab-content active" id="buscar">
+                <h2>Buscar Avaliações Anteriores</h2>
+
+                <div class="search-section">
+                    <div class="search-form">
+                        <input type="text" id="search-cpf" placeholder="Digite o CPF para buscar">
+                        <button onclick="searchEvaluations()">Buscar</button>
+                    </div>
+                </div>
+
+                <div id="evaluations-container">
+                    <!-- As avaliações serão carregadas aqui -->
+                </div>
+            </div>
+
+            <!-- Dados Pessoais -->
+            <div class="tab-content" id="dados-pessoais">
+                <h2>Dados Pessoais</h2>
+
+                <div class="form-group">
+                    <label for="nome">Nome Completo</label>
+                    <input type="text" id="nome" placeholder="Digite o nome completo">
+                </div>
+
+                <div class="form-group">
+                    <label for="cpf">CPF</label>
+                    <input type="text" id="cpf" placeholder="Digite o CPF (apenas números)" maxlength="11">
+                </div>
+
+                <div class="form-group">
+                    <label for="genero">Gênero</label>
+                    <select id="genero">
+                        <option value="">Selecione</option>
+                        <option value="masculino">Masculino</option>
+                        <option value="feminino">Feminino</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="idade">Idade (anos)</label>
+                    <input type="number" id="idade" min="10" max="100">
+                </div>
+
+                <div class="form-group">
+                    <label for="data-avaliacao">Data da Avaliação</label>
+                    <input type="date" id="data-avaliacao">
+                </div>
+
+                <div class="form-group">
+                    <label for="estatura">Estatura (cm)</label>
+                    <input type="number" id="estatura" min="100" max="250">
+                </div>
+
+                <div class="form-group">
+                    <label for="peso">Peso (kg)</label>
+                    <input type="number" id="peso" min="30" max="250" step="0.1">
+                </div>
+
+                <button onclick="nextTab('perimetria')">Próximo → Perimetria</button>
+            </div>
+
+            <!-- Perimetria -->
+            <div class="tab-content" id="perimetria">
+                <h2>Perimetria</h2>
+                <p>Medidas em centímetros (cm)</p>
+
+                <h3>Pescoço</h3>
+                <div class="measurement-grid">
+                    <div class="measurement-item">
+                        <label for="pescoco">Pescoço</label>
+                        <input type="number" id="pescoco" min="20" max="80" step="0.1">
+                    </div>
+                </div>
+
+                <h3>Braços</h3>
+                <div class="measurement-grid">
+                    <div class="measurement-item">
+                        <label for="braco-esquerdo-relaxado">Braço Esquerdo Relaxado</label>
+                        <input type="number" id="braco-esquerdo-relaxado" min="10" max="100" step="0.1">
+                    </div>
+
+                    <div class="measurement-item">
+                        <label for="braco-esquerdo-contraido">Braço Esquerdo Contraído</label>
+                        <input type="number" id="braco-esquerdo-contraido" min="10" max="100" step="0.1">
+                    </div>
+
+                    <div class="measurement-item">
+                        <label for="antebraco-esquerdo">Antebraço Esquerdo</label>
+                        <input type="number" id="antebraco-esquerdo" min="10" max="100" step="0.1">
+                    </div>
+
+                    <div class="measurement-item">
+                        <label for="braco-direito-relaxado">Braço Direito Relaxado</label>
+                        <input type="number" id="braco-direito-relaxado" min="10" max="100" step="0.1">
+                    </div>
+
+                    <div class="measurement-item">
+                        <label for="braco-direito-contraido">Braço Direito Contraído</label>
+                        <input type="number" id="braco-direito-contraido" min="10" max="100" step="0.1">
+                    </div>
+
+                    <div class="measurement-item">
+                        <label for="antebraco-direito">Antebraço Direito</label>
+                        <input type="number" id="antebraco-direito" min="10" max="100" step="0.1">
+                    </div>
+                </div>
+
+                <h3>Tronco</h3>
+                <div class="measurement-grid">
+                    <div class="measurement-item">
+                        <label for="cintura">Cintura</label>
+                        <input type="number" id="cintura" min="50" max="200" step="0.1">
+                    </div>
+
+                    <div class="measurement-item">
+                        <label for="abdomen">Abdômen</label>
+                        <input type="number" id="abdomen" min="50" max="150" step="0.1">
+                    </div>
+
+                    <div class="measurement-item">
+                        <label for="quadril">Quadril</label>
+                        <input type="number" id="quadril" min="60" max="200" step="0.1">
+                    </div>
+                </div>
+
+                <h3>Membros Inferiores</h3>
+                <div class="measurement-grid">
+                    <div class="measurement-item">
+                        <label for="coxa-esquerda">Coxa Esquerda</label>
+                        <input type="number" id="coxa-esquerda" min="30" max="150" step="0.1">
+                    </div>
+
+                    <div class="measurement-item">
+                        <label for="coxa-direita">Coxa Direita</label>
+                        <input type="number" id="coxa-direita" min="30" max="150" step="0.1">
+                    </div>
+
+                    <div class="measurement-item">
+                        <label for="perna-esquerda">Perna Esquerda</label>
+                        <input type="number" id="perna-esquerda" min="20" max="150" step="0.1">
+                    </div>
+
+                    <div class="measurement-item">
+                        <label for="perna-direita">Perna Direita</label>
+                        <input type="number" id="perna-direita" min="20" max="150" step="0.1">
+                    </div>
+                </div>
+
+                <button onclick="previousTab('dados-pessoais')">← Anterior</button>
+                <button onclick="nextTab('antropometria')">Próximo → Antropometria</button>
+            </div>
+
+            <!-- Antropometria -->
+            <div class="tab-content" id="antropometria">
+                <h2>Antropometria</h2>
+                <p>Medidas das dobras cutâneas em milímetros (mm)</p>
+
+                <div class="measurement-grid">
+                    <div class="measurement-item">
+                        <label for="tricipital">Tricipital</label>
+                        <input type="number" id="tricipital" min="3" max="80" step="0.1">
+                    </div>
+
+                    <div class="measurement-item">
+                        <label for="subescapular">Subescapular</label>
+                        <input type="number" id="subescapular" min="3" max="80" step="0.1">
+                    </div>
+
+                    <div class="measurement-item">
+                        <label for="supra-iliaca">Supra-ilíaca</label>
+                        <input type="number" id="supra-iliaca" min="3" max="80" step="0.1">
+                    </div>
+
+                    <div class="measurement-item">
+                        <label for="peitoral">Peitoral</label>
+                        <input type="number" id="peitoral" min="3" max="80" step="0.1">
+                    </div>
+
+                    <div class="measurement-item">
+                        <label for="axilar-media">Axilar Média</label>
+                        <input type="number" id="axilar-media" min="3" max="80" step="0.1">
+                    </div>
+
+                    <div class="measurement-item">
+                        <label for="abdominal">Abdominal</label>
+                        <input type="number" id="abdominal" min="3" max="80" step="0.1">
+                    </div>
+
+                    <div class="measurement-item">
+                        <label for="coxa-antropo">Coxa</label>
+                        <input type="number" id="coxa-antropo" min="3" max="80" step="0.1">
+                    </div>
+                </div>
+
+                <button onclick="previousTab('perimetria')">← Anterior</button>
+                <button onclick="nextTab('anamnese')">Próximo → Anamnese</button>
+            </div>
+
+            <!-- Anamnese -->
+            <div class="tab-content" id="anamnese">
+                <h2>Anamnese</h2>
+
+                <div class="form-group">
+                    <label for="historico-medico">Histórico Médico</label>
+                    <textarea id="historico-medico" class="anamnese-textarea" placeholder="Doenças pré-existentes, cirurgias, medicamentos em uso..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="habitos-vida">Hábitos de Vida</label>
+                    <textarea id="habitos-vida" class="anamnese-textarea" placeholder="Tabagismo, etilismo, atividade física, alimentação..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="objetivos">Objetivos com a Atividade Física</label>
+                    <textarea id="objetivos" class="anamnese-textarea" placeholder="Emagrecimento, hipertrofia, condicionamento..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="observacoes">Observações</label>
+                    <textarea id="observacoes" class="anamnese-textarea" placeholder="Outras informações relevantes..."></textarea>
+                </div>
+
+                <button onclick="previousTab('antropometria')">← Anterior</button>
+                <button onclick="calculateResults()">Calcular Resultados</button>
+            </div>
+
+            <!-- Resultados -->
+            <div class="tab-content" id="resultados">
+                <h2>Resultados da Avaliação</h2>
+
+                <div class="results-section">
+                    <h3>Dados Básicos</h3>
+                    <div class="result-item">
+                        <span>Nome:</span>
+                        <span class="result-value" id="result-nome">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span>CPF:</span>
+                        <span class="result-value" id="result-cpf">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span>Gênero:</span>
+                        <span class="result-value" id="result-genero">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span>Idade:</span>
+                        <span class="result-value" id="result-idade">- anos</span>
+                    </div>
+                    <div class="result-item">
+                        <span>Estatura:</span>
+                        <span class="result-value" id="result-estatura">- cm</span>
+                    </div>
+                    <div class="result-item">
+                        <span>Peso Atual:</span>
+                        <span class="result-value" id="result-peso">- kg</span>
+                    </div>
+
+                    <h3>Índices Corporais</h3>
+                    <div class="result-item">
+                        <span>Índice de Massa Corporal (IMC):</span>
+                        <span class="result-value" id="result-imc">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span>Classificação IMC:</span>
+                        <span class="result-value" id="result-classificacao-imc">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span>Relação Cintura/Quadril:</span>
+                        <span class="result-value" id="result-rcq">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span>Risco Cardiovascular (RCQ):</span>
+                        <span class="result-value" id="result-risco-rcq">-</span>
+                    </div>
+
+                    <h3>Composição Corporal</h3>
+                    <div class="result-item">
+                        <span>Percentual de Gordura (%):</span>
+                        <span class="result-value" id="result-percentual-gordura">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span>Classificação Percentual de Gordura:</span>
+                        <span class="result-value" id="result-classificacao-gordura">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span>Massa Gorda (kg):</span>
+                        <span class="result-value" id="result-massa-gorda">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span>Massa Magra (kg):</span>
+                        <span class="result-value" id="result-massa-magra">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span>Peso Ideal (kg):</span>
+                        <span class="result-value" id="result-peso-ideal">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span>Peso a Perder/Ganhar (kg):</span>
+                        <span class="result-value" id="result-peso-diferenca">-</span>
+                    </div>
+                </div>
+
+                <button onclick="previousTab('anamnese')">← Anterior</button>
+                <button onclick="saveEvaluation()">Salvar Avaliação</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Navegação entre abas
+        function switchTab(tabName) {
+            // Esconde todas as abas
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Mostra a aba selecionada
+            document.getElementById(tabName).classList.add('active');
+
+            // Atualiza a aba ativa
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+                if (tab.getAttribute('data-tab') === tabName) {
+                    tab.classList.add('active');
+                }
+            });
+        }
+
+        function nextTab(tabName) {
+            switchTab(tabName);
+        }
+
+        function previousTab(tabName) {
+            switchTab(tabName);
+        }
+
+        // Adiciona eventos de clique às abas
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                const tabName = this.getAttribute('data-tab');
+                switchTab(tabName);
+
+                // Se for a aba de busca, carrega as avaliações
+                if (tabName === 'buscar') {
+                    loadEvaluationsList();
+                }
+            });
+        });
+
+        // Formatação do CPF
+        document.getElementById('cpf').addEventListener('input', function() {
+            let cpf = this.value.replace(/\D/g, '');
+            if (cpf.length > 11) {
+                cpf = cpf.substring(0, 11);
+            }
+            this.value = cpf;
+        });
+
+        // Cálculos da avaliação física
+        function calculateResults() {
+            // Coleta dados básicos
+            const nome = document.getElementById('nome').value;
+            const cpf = document.getElementById('cpf').value;
+            const genero = document.getElementById('genero').value;
+            const idade = parseInt(document.getElementById('idade').value);
+            const estatura = parseFloat(document.getElementById('estatura').value);
+            const peso = parseFloat(document.getElementById('peso').value);
+
+            // Coleta medidas de perimetria
+            const cintura = parseFloat(document.getElementById('cintura').value);
+            const quadril = parseFloat(document.getElementById('quadril').value);
+
+            // Coleta medidas de dobras cutâneas
+            const tricipital = parseFloat(document.getElementById('tricipital').value);
+            const subescapular = parseFloat(document.getElementById('subescapular').value);
+            const supraIliaca = parseFloat(document.getElementById('supra-iliaca').value);
+            const peitoral = parseFloat(document.getElementById('peitoral').value);
+            const axilarMedia = parseFloat(document.getElementById('axilar-media').value);
+            const abdominal = parseFloat(document.getElementById('abdominal').value);
+            const coxaAntropo = parseFloat(document.getElementById('coxa-antropo').value);
+
+            // Verifica se todos os dados necessários foram preenchidos
+            if (!nome || !cpf || !genero || !idade || !estatura || !peso) {
+                alert('Por favor, preencha todos os dados básicos antes de calcular os resultados.');
+                return;
+            }
+
+            // Cálculo do IMC (corrigido)
+            // IMC: peso (kg) dividido pela estatura (m) ao quadrado
+            let imc = 0;
+            if (peso > 0 && estatura > 0) {
+                const estaturaMetros = estatura / 100;
+                imc = Number((peso / (estaturaMetros * estaturaMetros)).toFixed(2));
+            }
+
+            // Classificação do IMC
+            let classificacaoImc = '';
+            if (imc < 18.5) {
+                classificacaoImc = 'Abaixo do peso';
+            } else if (imc < 25) {
+                classificacaoImc = 'Peso normal';
+            } else if (imc < 30) {
+                classificacaoImc = 'Sobrepeso';
+            } else if (imc < 35) {
+                classificacaoImc = 'Obesidade Grau I';
+            } else if (imc < 40) {
+                classificacaoImc = 'Obesidade Grau II';
+            } else {
+                classificacaoImc = 'Obesidade Grau III';
+            }
+
+            // Cálculo da relação cintura/quadril
+            const rcq = cintura / quadril;
+
+            // Risco cardiovascular baseado na RCQ
+            let riscoRcq = '';
+            if (genero === 'masculino') {
+                if (rcq < 0.90) {
+                    riscoRcq = 'Baixo risco';
+                } else if (rcq < 0.99) {
+                    riscoRcq = 'Risco moderado';
+                } else {
+                    riscoRcq = 'Alto risco';
+                }
+            } else {
+                if (rcq < 0.80) {
+                    riscoRcq = 'Baixo risco';
+                } else if (rcq < 0.84) {
+                    riscoRcq = 'Risco moderado';
+                } else {
+                    riscoRcq = 'Alto risco';
+                }
+            }
+
+            // Cálculo do percentual de gordura (Método Pollock 7 dobras)
+            let densidadeCorporal, percentualGordura;
+
+            if (genero === 'masculino') {
+                // Fórmula para homens
+                const somaDobras = tricipital + subescapular + peitoral + axilarMedia + abdominal + supraIliaca + coxaAntropo;
+                densidadeCorporal = 1.112 - (0.00043499 * somaDobras) + (0.00000055 * Math.pow(somaDobras, 2)) - (0.00028826 * idade);
+            } else {
+                // Fórmula para mulheres
+                const somaDobras = tricipital + subescapular + peitoral + axilarMedia + abdominal + supraIliaca + coxaAntropo;
+                densidadeCorporal = 1.097 - (0.00046971 * somaDobras) + (0.00000056 * Math.pow(somaDobras, 2)) - (0.00012828 * idade);
+            }
+
+            // Fórmula de Siri para percentual de gordura
+            percentualGordura = (4.95 / densidadeCorporal - 4.5) * 100;
+
+            // Classificação do percentual de gordura
+            let classificacaoGordura = '';
+            if (genero === 'masculino') {
+                if (percentualGordura < 6) {
+                    classificacaoGordura = 'Muito baixo';
+                } else if (percentualGordura < 14) {
+                    classificacaoGordura = 'Excelente';
+                } else if (percentualGordura < 18) {
+                    classificacaoGordura = 'Bom';
+                } else if (percentualGordura < 25) {
+                    classificacaoGordura = 'Regular';
+                } else {
+                    classificacaoGordura = 'Alto';
+                }
+            } else {
+                if (percentualGordura < 14) {
+                    classificacaoGordura = 'Muito baixo';
+                } else if (percentualGordura < 21) {
+                    classificacaoGordura = 'Excelente';
+                } else if (percentualGordura < 25) {
+                    classificacaoGordura = 'Bom';
+                } else if (percentualGordura < 32) {
+                    classificacaoGordura = 'Regular';
+                } else {
+                    classificacaoGordura = 'Alto';
+                }
+            }
+
+            // Cálculo da massa gorda e massa magra
+            const massaGorda = (percentualGordura / 100) * peso;
+            const massaMagra = peso - massaGorda;
+
+            // Cálculo do peso ideal (método de Lorentz) - Corrigido
+            let pesoIdeal;
+            if (genero === 'masculino') {
+                pesoIdeal = estatura - 100 - ((estatura - 150) / 4);
+            } else {
+                pesoIdeal = estatura - 100 - ((estatura - 150) / 2.5);
+            }
+
+            const pesoDiferenca = peso - pesoIdeal;
+
+            // Exibe os resultados
+            document.getElementById('result-nome').textContent = nome;
+            document.getElementById('result-cpf').textContent = cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+            document.getElementById('result-genero').textContent = genero.charAt(0).toUpperCase() + genero.slice(1);
+            document.getElementById('result-idade').textContent = idade + ' anos';
+            document.getElementById('result-estatura').textContent = estatura.toFixed(1) + ' cm';
+            document.getElementById('result-peso').textContent = peso.toFixed(1) + ' kg';
+            document.getElementById('result-imc').textContent = imc.toFixed(1);
+            document.getElementById('result-classificacao-imc').textContent = classificacaoImc;
+            document.getElementById('result-rcq').textContent = rcq.toFixed(2);
+            document.getElementById('result-risco-rcq').textContent = riscoRcq;
+            document.getElementById('result-percentual-gordura').textContent = percentualGordura.toFixed(1) + '%';
+            document.getElementById('result-classificacao-gordura').textContent = classificacaoGordura;
+            document.getElementById('result-massa-gorda').textContent = massaGorda.toFixed(1) + ' kg';
+            document.getElementById('result-massa-magra').textContent = massaMagra.toFixed(1) + ' kg';
+            document.getElementById('result-peso-ideal').textContent = pesoIdeal.toFixed(1) + ' kg';
+
+            if (pesoDiferenca > 0) {
+                document.getElementById('result-peso-diferenca').textContent = 'Perder ' + Math.abs(pesoDiferenca).toFixed(1) + ' kg';
+            } else if (pesoDiferenca < 0) {
+                document.getElementById('result-peso-diferenca').textContent = 'Ganhar ' + Math.abs(pesoDiferenca).toFixed(1) + ' kg';
+            } else {
+                document.getElementById('result-peso-diferenca').textContent = 'Peso ideal';
+            }
+
+            // Vai para a aba de resultados
+            switchTab('resultados');
+        }
+
+        // Sistema de armazenamento de avaliações
+        function saveEvaluation() {
+            // Coleta todos os dados do formulário
+            const evaluation = {
+                id: Date.now(), // ID único baseado no timestamp
+                nome: document.getElementById('nome').value,
+                cpf: document.getElementById('cpf').value,
+                genero: document.getElementById('genero').value,
+                idade: document.getElementById('idade').value,
+                dataAvaliacao: document.getElementById('data-avaliacao').value,
+                estatura: document.getElementById('estatura').value,
+                peso: document.getElementById('peso').value,
+
+                // Perimetria
+                pescoco: document.getElementById('pescoco').value,
+                bracoEsquerdoRelaxado: document.getElementById('braco-esquerdo-relaxado').value,
+                bracoEsquerdoContraido: document.getElementById('braco-esquerdo-contraido').value,
+                antebracoEsquerdo: document.getElementById('antebraco-esquerdo').value,
+                bracoDireitoRelaxado: document.getElementById('braco-direito-relaxado').value,
+                bracoDireitoContraido: document.getElementById('braco-direito-contraido').value,
+                antebracoDireito: document.getElementById('antebraco-direito').value,
+                cintura: document.getElementById('cintura').value,
+                abdomen: document.getElementById('abdomen').value,
+                quadril: document.getElementById('quadril').value,
+                coxaEsquerda: document.getElementById('coxa-esquerda').value,
+                coxaDireita: document.getElementById('coxa-direita').value,
+                pernaEsquerda: document.getElementById('perna-esquerda').value,
+                pernaDireita: document.getElementById('perna-direita').value,
+
+                // Antropometria
+                tricipital: document.getElementById('tricipital').value,
+                subescapular: document.getElementById('subescapular').value,
+                supraIliaca: document.getElementById('supra-iliaca').value,
+                peitoral: document.getElementById('peitoral').value,
+                axilarMedia: document.getElementById('axilar-media').value,
+                abdominal: document.getElementById('abdominal').value,
+                coxaAntropo: document.getElementById('coxa-antropo').value,
+
+                // Anamnese
+                historicoMedico: document.getElementById('historico-medico').value,
+                habitosVida: document.getElementById('habitos-vida').value,
+                objetivos: document.getElementById('objetivos').value,
+                observacoes: document.getElementById('observacoes').value,
+
+                // Resultados (para facilitar a recuperação)
+                resultados: {
+                    imc: document.getElementById('result-imc').textContent,
+                    classificacaoImc: document.getElementById('result-classificacao-imc').textContent,
+                    rcq: document.getElementById('result-rcq').textContent,
+                    riscoRcq: document.getElementById('result-risco-rcq').textContent,
+                    percentualGordura: document.getElementById('result-percentual-gordura').textContent,
+                    classificacaoGordura: document.getElementById('result-classificacao-gordura').textContent,
+                    massaGorda: document.getElementById('result-massa-gorda').textContent,
+                    massaMagra: document.getElementById('result-massa-magra').textContent,
+                    pesoIdeal: document.getElementById('result-peso-ideal').textContent,
+                    pesoDiferenca: document.getElementById('result-peso-diferenca').textContent
+                }
+            };
+
+            // Recupera avaliações existentes ou cria um array vazio
+            let evaluations = JSON.parse(localStorage.getItem('avaliacoesFisicas')) || [];
+
+            // Adiciona a nova avaliação
+            evaluations.push(evaluation);
+
+            // Salva no localStorage
+            localStorage.setItem('avaliacoesFisicas', JSON.stringify(evaluations));
+
+            alert('Avaliação salva com sucesso!');
+
+            // Limpa o formulário para uma nova avaliação
+            document.querySelectorAll('input, textarea, select').forEach(element => {
+                if (element.id !== 'data-avaliacao') {
+                    element.value = '';
+                }
+            });
+
+            // Volta para a primeira aba
+            switchTab('buscar');
+
+            // Atualiza a lista de avaliações
+            loadEvaluationsList();
+        }
+
+        // Carrega a lista de avaliações
+        function loadEvaluationsList() {
+            const evaluations = JSON.parse(localStorage.getItem('avaliacoesFisicas')) || [];
+            const container = document.getElementById('evaluations-container');
+
+            if (evaluations.length === 0) {
+                container.innerHTML = '<p>Nenhuma avaliação encontrada.</p>';
+                return;
+            }
+
+            // Ordena por data (mais recente primeiro)
+            evaluations.sort((a, b) => new Date(b.dataAvaliacao) - new Date(a.dataAvaliacao));
+
+            let html = '<div class="evaluations-list">';
+
+            evaluations.forEach(evaluation => {
+                const dataFormatada = new Date(evaluation.dataAvaliacao).toLocaleDateString('pt-BR');
+
+                html += `
+                    <div class="evaluation-item" onclick="loadEvaluation(${evaluation.id})">
+                        <div class="evaluation-header">
+                            <span class="evaluation-name">${evaluation.nome}</span>
+                            <span class="evaluation-date">${dataFormatada}</span>
+                        </div>
+                        <div>CPF: ${evaluation.cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4')}</div>
+                        <div>Idade: ${evaluation.idade} anos | Peso: ${evaluation.peso} kg | Estatura: ${evaluation.estatura} cm</div>
+                    </div>
+                `;
+            });
+
+            html += '</div>';
+            container.innerHTML = html;
+        }
+
+        // Busca avaliações por CPF
+        function searchEvaluations() {
+            const searchCpf = document.getElementById('search-cpf').value.replace(/\D/g, '');
+            const evaluations = JSON.parse(localStorage.getItem('avaliacoesFisicas')) || [];
+            const container = document.getElementById('evaluations-container');
+
+            if (!searchCpf) {
+                loadEvaluationsList();
+                return;
+            }
+
+            const filteredEvaluations = evaluations.filter(evaluation =>
+                evaluation.cpf.includes(searchCpf)
+            );
+
+            if (filteredEvaluations.length === 0) {
+                container.innerHTML = '<p>Nenhuma avaliação encontrada para este CPF.</p>';
+                return;
+            }
+
+            let html = '<div class="evaluations-list">';
+
+            filteredEvaluations.forEach(evaluation => {
+                const dataFormatada = new Date(evaluation.dataAvaliacao).toLocaleDateString('pt-BR');
+
+                html += `
+                    <div class="evaluation-item" onclick="loadEvaluation(${evaluation.id})">
+                        <div class="evaluation-header">
+                            <span class="evaluation-name">${evaluation.nome}</span>
+                            <span class="evaluation-date">${dataFormatada}</span>
+                        </div>
+                        <div>CPF: ${evaluation.cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4')}</div>
+                        <div>Idade: ${evaluation.idade} anos | Peso: ${evaluation.peso} kg | Estatura: ${evaluation.estatura} cm</div>
+                    </div>
+                `;
+            });
+
+            html += '</div>';
+            container.innerHTML = html;
+        }
+
+        // Carrega uma avaliação específica
+        function loadEvaluation(id) {
+            const evaluations = JSON.parse(localStorage.getItem('avaliacoesFisicas')) || [];
+            const evaluation = evaluations.find(e => e.id === id);
+
+            if (!evaluation) {
+                alert('Avaliação não encontrada.');
+                return;
+            }
+
+            // Preenche o formulário com os dados da avaliação
+            document.getElementById('nome').value = evaluation.nome;
+            document.getElementById('cpf').value = evaluation.cpf;
+            document.getElementById('genero').value = evaluation.genero;
+            document.getElementById('idade').value = evaluation.idade;
+            document.getElementById('data-avaliacao').value = evaluation.dataAvaliacao;
+            document.getElementById('estatura').value = evaluation.estatura;
+            document.getElementById('peso').value = evaluation.peso;
+
+            // Perimetria
+            document.getElementById('pescoco').value = evaluation.pescoco;
+            document.getElementById('braco-esquerdo-relaxado').value = evaluation.bracoEsquerdoRelaxado;
+            document.getElementById('braco-esquerdo-contraido').value = evaluation.bracoEsquerdoContraido;
+            document.getElementById('antebraco-esquerdo').value = evaluation.antebracoEsquerdo;
+            document.getElementById('braco-direito-relaxado').value = evaluation.bracoDireitoRelaxado;
+            document.getElementById('braco-direito-contraido').value = evaluation.bracoDireitoContraido;
+            document.getElementById('antebraco-direito').value = evaluation.antebracoDireito;
+            document.getElementById('cintura').value = evaluation.cintura;
+            document.getElementById('abdomen').value = evaluation.abdomen;
+            document.getElementById('quadril').value = evaluation.quadril;
+            document.getElementById('coxa-esquerda').value = evaluation.coxaEsquerda;
+            document.getElementById('coxa-direita').value = evaluation.coxaDireita;
+            document.getElementById('perna-esquerda').value = evaluation.pernaEsquerda;
+            document.getElementById('perna-direita').value = evaluation.pernaDireita;
+
+            // Antropometria
+            document.getElementById('tricipital').value = evaluation.tricipital;
+            document.getElementById('subescapular').value = evaluation.subescapular;
+            document.getElementById('supra-iliaca').value = evaluation.supraIliaca;
+            document.getElementById('peitoral').value = evaluation.peitoral;
+            document.getElementById('axilar-media').value = evaluation.axilarMedia;
+            document.getElementById('abdominal').value = evaluation.abdominal;
+            document.getElementById('coxa-antropo').value = evaluation.coxaAntropo;
+
+            // Anamnese
+            document.getElementById('historico-medico').value = evaluation.historicoMedico;
+            document.getElementById('habitos-vida').value = evaluation.habitosVida;
+            document.getElementById('objetivos').value = evaluation.objetivos;
+            document.getElementById('observacoes').value = evaluation.observacoes;
+
+            // Vai para a aba de resultados
+            switchTab('resultados');
+
+            // Preenche os resultados
+            document.getElementById('result-nome').textContent = evaluation.nome;
+            document.getElementById('result-cpf').textContent = evaluation.cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+            document.getElementById('result-genero').textContent = evaluation.genero.charAt(0).toUpperCase() + evaluation.genero.slice(1);
+            document.getElementById('result-idade').textContent = evaluation.idade + ' anos';
+            document.getElementById('result-estatura').textContent = evaluation.estatura + ' cm';
+            document.getElementById('result-peso').textContent = evaluation.peso + ' kg';
+
+            // Resultados calculados
+            if (evaluation.resultados) {
+                document.getElementById('result-imc').textContent = evaluation.resultados.imc;
+                document.getElementById('result-classificacao-imc').textContent = evaluation.resultados.classificacaoImc;
+                document.getElementById('result-rcq').textContent = evaluation.resultados.rcq;
+                document.getElementById('result-risco-rcq').textContent = evaluation.resultados.riscoRcq;
+                document.getElementById('result-percentual-gordura').textContent = evaluation.resultados.percentualGordura;
+                document.getElementById('result-classificacao-gordura').textContent = evaluation.resultados.classificacaoGordura;
+                document.getElementById('result-massa-gorda').textContent = evaluation.resultados.massaGorda;
+                document.getElementById('result-massa-magra').textContent = evaluation.resultados.massaMagra;
+                document.getElementById('result-peso-ideal').textContent = evaluation.resultados.pesoIdeal;
+                document.getElementById('result-peso-diferenca').textContent = evaluation.resultados.pesoDiferenca;
+            }
+        }
+
+        // Preenche a data atual como padrão
+        document.getElementById('data-avaliacao').valueAsDate = new Date();
+
+        // Carrega a lista de avaliações ao iniciar
+        window.addEventListener('DOMContentLoaded', () => {
+            loadEvaluationsList();
+        });
+    </script>
+</body>
+
+</html>
